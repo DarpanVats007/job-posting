@@ -1,9 +1,10 @@
+import type { department, location } from "../postings/postingsApiSlice"
+
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import type { location } from "../postings/postingsApiSlice"
 
 export interface LocationSliceState {
-  value: location["city"][]
+  value: location[]
   status: "idle" | "loading" | "failed"
 }
 
@@ -17,11 +18,11 @@ export const locationSlice = createAppSlice({
   initialState,
   reducers: create => ({
     addLocation: create.reducer(
-      (state, action: PayloadAction<string>) => {
+      (state, action: PayloadAction<location>) => {
         state.value.push(action.payload)
     }),
     removeLocation: create.reducer(
-      (state, action: PayloadAction<string>) => {
+      (state, action: PayloadAction<location>) => {
       state.value = state.value.filter(location => location!== action.payload)
     }),
     removeAllLocations: create.reducer(

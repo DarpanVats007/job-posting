@@ -13,7 +13,7 @@ export type department = {
 }
 
 export type Posting = {
-  id: number
+  id: string
   name: string
   uuid: string
   jobAdId: string
@@ -62,17 +62,16 @@ interface PostingsApiResponse {
 export const postingsApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl:
-      "https://api.smartrecruiters.com/v1/companies/smartrecruiters/postings",
+      "https://api.smartrecruiters.com/v1/companies/smartrecruiters/",
   }),
   reducerPath: "postingsApi",
-  // Tag types are used for caching and invalidation.
   tagTypes: ["Postings"],
   endpoints: build => ({
     // Supply generics for the return type (in this case `QuotesApiResponse`)
     // and the expected query argument. If there is no argument, use `void`
     // for the argument type instead.
     getPostings: build.query<PostingsApiResponse, number>({
-      query: (limit = 10) => `?limit=${limit}`,
+      query: () => '/postings',
       // `providesTags` determines which 'tag' is attached to the
       // cached data returned by the query.
       providesTags: (result, error, id) => [{ type: "Postings", id }],

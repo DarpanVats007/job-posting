@@ -1,87 +1,105 @@
-import { type FC } from "react"
-import { Location } from "../features/location/location"
-import { Postings } from "../features/postings/Postings"
-import { useGetPostingsQuery } from "../features/postings/postingsApiSlice"
-import { Container, Nav, Navbar } from "react-bootstrap"
-//   import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
+import { addJob, removeAllJobs, selectJob } from "../features/job/jobSlice"
+import {
+  removeAllDepartments,
+  selectDepartment,
+} from "../features/department/departmentSlice"
+import {
+  removeAllLocations,
+  selectLocation,
+} from "../features/location/locationSlice"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 
-import { useAppSelector } from "../app/hooks"
-import { selectLocation } from "../features/location/locationSlice"
 import { Department } from "../features/department/department"
-import { selectDepartment } from "../features/department/departmentSlice"
-//   import type { location } from "../postings/postingsApiSlice";
+import { Job } from "../features/job/job"
+import { Location } from "../features/location/location"
+import type { Posting } from "../features/postings/postingsApiSlice"
+import type { SearchCriteria } from "../utils/search";
+import { searchJobs } from "../utils/search"
+import { useGetPostingsQuery } from "../features/postings/postingsApiSlice"
 
-export type HomePageModel = {}
+export default function HomePage() {
 
-export const HomePage: FC<HomePageModel> = () => {
-  const { data, isSuccess } = useGetPostingsQuery(10)
+  const locationState = useAppSelector(selectLocation)
+  const departmentState = useAppSelector(selectDepartment)
+  const jobsState = useAppSelector(selectJob)
 
-  const location = useAppSelector(selectLocation) // TODO check to make multiple reducers
-  const department = useAppSelector(selectDepartment) // TODO check to make multiple reducers
+  const dispatch = useAppDispatch()
 
-  //TODO think of something to make dept available dierctly
-  let arr: string[] = []
-  data?.content.forEach(element => {
-    arr.push(element.location.city)
-  })
+  const { data: posts, isError, isLoading, isSuccess } = useGetPostingsQuery(10)
 
-  const arrLocation = arr.filter(
-    (value, index, self) => self.indexOf(value) === index,
-  )
+  const arrLocation = [
+    ...new Set(posts?.content.map(element => element.location)),
+  ]
+  const arrDept = [
+    ...new Set(posts?.content.map(element => element.department)),
+  ]
 
-  let arr2: string[] = []
-  data?.content.forEach(element => {
-    arr2.push(element.department.label)
-  })
+  const handleSearch = (jobs: Posting[], 
+    { location, department }: SearchCriteria) => {
+  const searchResult = searchJobs( jobs,
+    { location,
+      department
+    })
+    dispatch(addJob(searchResult));
+  
+  };
 
-  const arrDept = arr2.filter(
-    (value, index, self) => self.indexOf(value) === index,
-  )
+  const clearSearch = () => {
+    dispatch(removeAllLocations())
+    dispatch(removeAllDepartments())
+    dispatch(removeAllJobs())
+  }
 
   if (isSuccess) {
     return (
-      <>
-        <Navbar expand="lg" className="bg-body-tertiary">
-          <Container>
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#link">Link</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <Navbar expand="lg" className="bg-body-tertiary"></Navbar>
-        <Container
-          style={{
-            padding: 20,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-            }}
-          >
+      <Container className="p-3">
+        <Row>
+          <Col sm={5}>
             <Location
               locations={arrLocation}
-              placeHolderText="Search by location"
+              placeHolderText="Search Location"
               type="location"
-              filterTags={location}
+              filterTags={locationState}
             />
+          </Col>
+          <Col sm={5}>
             <Department
               departments={arrDept}
-              placeHolderText="Search by Dept."
+              placeHolderText={"Search Department"}
               type="department"
-              filterTags={department}
+              filterTags={departmentState}
             />
-          </div>
-          <Postings />
-        </Container>
-      </>
+          </Col>
+          <Col sm={2} style={{ textAlign: "right" }}>
+            <Button onClick={() => handleSearch( 
+              posts.content,
+              { location: locationState, 
+                department: departmentState 
+              }
+              )}>Search</Button>
+          </Col>
+        </Row>
+        <div>
+          {
+            jobsState.length ? <div>
+              <Button
+              onClick={() => clearSearch()}
+              >Clear search</Button>
+              <Job jobs={jobsState.flat()} />
+            </div> 
+            : <Job jobs={posts.content} />
+          }
+        </div>
+      </Container>
     )
   }
+
+  // Loading state
+  return  (
+    <div className="loading">
+      <Spinner animation="border" variant="primary" />
+      <h1>Loading...</h1>
+    </div>
+  )
 }

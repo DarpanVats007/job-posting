@@ -1,53 +1,52 @@
+import type { department, location } from "../features/postings/postingsApiSlice";
+
 import { Button } from "react-bootstrap";
 import type { FC } from "react";
 import { removeDepartment } from "../features/department/departmentSlice";
 import { removeLocation } from "../features/location/locationSlice";
 import { useAppDispatch } from "../app/hooks";
 
-export type TagModel ={
- type:  string; // TODO make matcher like "location" | "department";
- badges: string[]
+export type TagModel = {
+  type: "location" | "department";
+  badges: location[] | department[];
 }
 
 export const Tag: FC<TagModel> = ({
-    type,
-    badges
-})  => {
+  type,
+  badges
+}) => {
+  const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch()
-
-  const clearSearch = (badge: string) => { //TODO change to location or department
-    console.log(badge)
+  const clearSearch = (badge: location | department) => {
     if (type === "location") {
-        dispatch(removeLocation(badge))
-    } else {
-          dispatch(removeDepartment(badge)) // TODO add department
-   
+      dispatch(removeLocation(badge)); // Assuming badge has an 'id' property
+    } else if (type === "department") {
+      dispatch(removeDepartment(badge)); // Assuming badge has an 'id' property
     }
   };
 
   return (
-    <div>
-      <div className="posting">
-        {badges &&
-          badges.map((badge) => (
-            <Button
-              key={badge}
-              variant="outline-secondary"
-              className="close"
-              aria-label="Close"
-            >
-              {type}: <span className="badge bg-primary">{badge}</span>{" "}
-              <span
-                key={badge}
-                onClick={() => clearSearch(badge)}
-                aria-hidden="true"
-              >
-                &times;
-              </span>
-            </Button>
-          ))}
-      </div>
+    <div className="posting">
+      {badges.map((badge) => (
+        <Button
+          key={badge} // Assuming badge has an 'id' property
+          variant="outline-secondary"
+          className="close"
+          aria-label="Close"
+          style={{
+            margin: 10,
+          }}
+        >
+          {type}: <span className="badge bg-primary">{badge.name}</span>{" "} {/* Assuming badge has a 'name' property */}
+          <span
+            key={badge} // Assuming badge has an 'id' property
+            onClick={() => clearSearch(badge)}
+            aria-hidden="true"
+          >
+            &times;
+          </span>
+        </Button>
+      ))}
     </div>
   );
-}
+};
