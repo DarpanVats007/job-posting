@@ -1,5 +1,5 @@
 import type { ChangeEvent, FC } from "react";
-import { DropdownButton, Form, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, DropdownButton, Form, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { Tag } from "../../components/tag";
 import type { TagModel } from "../../components/tag";
@@ -41,8 +41,8 @@ export const Location: FC<LocationModel> = ({
   };
 
   return (
-    <div style={{ maxWidth: 400 }}>
-      <InputGroup style={{ width: "100%" }}>
+    <Container >
+      <InputGroup className="w-100">
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Control
@@ -80,6 +80,6 @@ export const Location: FC<LocationModel> = ({
         </ListGroup>
       )}
       <Tag badges={filterTags} type={type} />
-    </div>
+    </Container>
   );
 };

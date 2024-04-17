@@ -1,5 +1,5 @@
 import type { ChangeEvent, FC } from "react";
-import { DropdownButton, Form, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, DropdownButton, Form, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
 
 import { Tag } from "../../components/tag";
 import type { TagModel } from "../../components/tag";
@@ -39,8 +39,8 @@ export const Department: FC<DepartmentModel> = ({
   };
 
   return (
-    <div style={{ maxWidth: 400 }}>
-      <InputGroup style={{ width: "100%" }}>
+    <Container >
+      <InputGroup className="w-100">
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Control
@@ -55,6 +55,7 @@ export const Department: FC<DepartmentModel> = ({
           <ListGroup className="search-list-group">
             {departments.map(department => (
               <ListGroupItem
+              data-bs-theme="dark"
                 key={department.id} // TODO change to department id
                 className="search-list-group-item"
                 onClick={() => onClickItem(department)}
@@ -78,6 +79,6 @@ export const Department: FC<DepartmentModel> = ({
         </ListGroup>
       )}
       <Tag badges={filterTags} type={type} />
-    </div>
+    </Container>
   );
 };

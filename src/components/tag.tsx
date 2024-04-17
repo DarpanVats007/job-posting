@@ -28,7 +28,11 @@ export const Tag: FC<TagModel> = ({
   };
 
   return (
-    <div className="posting">
+    <div className="posting"
+    style={{
+      background: "rgb(235,244,243)",
+      borderRadius: 10 /* Adjust opacity as needed */
+    }}>
       {badges.map((badge) => (
         <Button
           key={badge.id}
@@ -37,6 +41,8 @@ export const Tag: FC<TagModel> = ({
           aria-label="Close"
           style={{
             margin: 10,
+            background: "rgba(255, 255, 255, 0.9)", /* Adjust opacity as needed */
+            backdropFilter: "blur(10px)", /* Apply a blur effect to the background */
           }}
         >
           {type === "location" && (badge as location).city ?

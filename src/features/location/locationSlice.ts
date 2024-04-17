@@ -18,7 +18,10 @@ export const locationSlice = createAppSlice({
   reducers: create => ({
     addLocation: create.reducer(
       (state, action: PayloadAction<location>) => {
-        state.value.push(action.payload)
+        const existingLocation = state.value.find(loc => loc.city === action.payload.city);
+        if (!existingLocation) {
+          state.value.push(action.payload);
+        }
     }),
     removeLocation: create.reducer(
       (state, action: PayloadAction<location>) => {
