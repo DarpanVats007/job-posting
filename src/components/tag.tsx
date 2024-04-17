@@ -19,9 +19,11 @@ export const Tag: FC<TagModel> = ({
 
   const clearSearch = (badge: location | department) => {
     if (type === "location") {
-      dispatch(removeLocation(badge)); // Assuming badge has an 'id' property
+      const locationBadge = badge as location; // Type assertion
+      dispatch(removeLocation(locationBadge));
     } else if (type === "department") {
-      dispatch(removeDepartment(badge)); // Assuming badge has an 'id' property
+      const departmentBadge = badge as department; // Type assertion
+      dispatch(removeDepartment(departmentBadge));
     }
   };
 
@@ -29,7 +31,7 @@ export const Tag: FC<TagModel> = ({
     <div className="posting">
       {badges.map((badge) => (
         <Button
-          key={badge} // Assuming badge has an 'id' property
+          key={badge.id}
           variant="outline-secondary"
           className="close"
           aria-label="Close"
@@ -37,9 +39,14 @@ export const Tag: FC<TagModel> = ({
             margin: 10,
           }}
         >
-          {type}: <span className="badge bg-primary">{badge.name}</span>{" "} {/* Assuming badge has a 'name' property */}
+          {type === "location" && (badge as location).city ?
+            <span className="badge bg-primary">{(badge as location).city}</span> :
+            type === "department" && (badge as department).label ?
+            <span className="badge bg-primary">{(badge as department).label}</span> :
+            null
+          }
           <span
-            key={badge} // Assuming badge has an 'id' property
+            key={badge.id}
             onClick={() => clearSearch(badge)}
             aria-hidden="true"
           >

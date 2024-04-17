@@ -11,9 +11,6 @@ export type SearchCriteria = {
     const searchLocation = location ? location.map(loc => loc.city.toLowerCase()) : [];
     const searchDepartment = department ? department.map(dep => dep.label.toLowerCase()) : [];
 
-    console.log(searchLocation)
-    console.log(searchDepartment)
-  
     return jobs.filter(job => {
       const jobLocation = job.location.city.toLowerCase();
       const jobDepartment = job.department.label.toLowerCase();
@@ -21,8 +18,6 @@ export type SearchCriteria = {
       if (searchLocation.length && searchDepartment.length) {
         return searchLocation.includes(jobLocation) && searchDepartment.includes(jobDepartment);
       } else if (searchLocation.length && !searchDepartment.length) {
-        console.log("called just location")
-        console.log(searchLocation.includes(jobLocation))
         return searchLocation.includes(jobLocation);
       } else if (!searchLocation.length && searchDepartment.length) {
         return searchDepartment.includes(jobDepartment);

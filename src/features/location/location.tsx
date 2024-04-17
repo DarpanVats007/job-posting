@@ -7,6 +7,7 @@ import { addLocation } from "./locationSlice";
 import type { location } from "../postings/postingsApiSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export interface LocationModel {
   locations: location[]; //TODO change to locationtype
@@ -26,8 +27,9 @@ export const Location: FC<LocationModel> = ({
   const dispatch = useAppDispatch();
 
   const onClickItem = (selectedLocation: location) => {
+    const locationWithUUID: location = { ...selectedLocation, id: uuidv4() };
     setSearch("");
-    dispatch(addLocation(selectedLocation));
+    dispatch(addLocation(locationWithUUID));
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {

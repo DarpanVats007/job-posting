@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export type location = {
+  id?: string
   city: string
   region: string
   country: string

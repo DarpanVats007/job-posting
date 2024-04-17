@@ -22,7 +22,7 @@ export const departmentSlice = createAppSlice({
     }),
     removeDepartment: create.reducer(
       (state, action: PayloadAction<department>) => {
-      state.value = state.value.filter(department => department!== action.payload)
+      state.value = state.value.filter(department => department.id !== action.payload.id)
     }),
     removeAllDepartments: create.reducer(
       (state) => {

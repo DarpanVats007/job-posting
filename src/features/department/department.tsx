@@ -27,7 +27,6 @@ export const Department: FC<DepartmentModel> = ({
 
   const onClickItem = (selectedDepartment: department) => {
     setSearch("");
-    console.log(selectedDepartment);
     dispatch(addDepartment(selectedDepartment));
   };
 
