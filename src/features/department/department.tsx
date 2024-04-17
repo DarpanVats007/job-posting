@@ -1,5 +1,12 @@
 import type { ChangeEvent, FC } from "react";
-import { Container, DropdownButton, Form, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
+import {
+  Container,
+  DropdownButton,
+  Form,
+  InputGroup,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
 
 import { Tag } from "../../components/tag";
 import type { TagModel } from "../../components/tag";
@@ -9,7 +16,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { useState } from "react";
 
 export interface DepartmentModel {
-  departments: department[]; //TODO change to department type
+  departments: department[];
   filterTags: department[];
   placeHolderText: string;
   type: TagModel["type"];
@@ -19,7 +26,7 @@ export const Department: FC<DepartmentModel> = ({
   departments,
   placeHolderText,
   filterTags,
-  type
+  type,
 }) => {
   const [search, setSearch] = useState<string>("");
   const [suggestions, setSuggestions] = useState<department[]>([]);
@@ -33,13 +40,16 @@ export const Department: FC<DepartmentModel> = ({
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const regex = new RegExp(`^${value}`, "i");
-    const suggestions = value.length > 0 ? departments.filter(v => regex.test(v.label)).sort() : [];
+    const suggestions =
+      value.length > 0
+        ? departments.filter((v) => regex.test(v.label)).sort()
+        : [];
     setSuggestions(suggestions);
     setSearch(value);
   };
 
   return (
-    <Container >
+    <Container>
       <InputGroup className="w-100">
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">
@@ -53,10 +63,10 @@ export const Department: FC<DepartmentModel> = ({
         </Form>
         <DropdownButton id="input-group-dropdown-2" title="">
           <ListGroup className="search-list-group">
-            {departments.map(department => (
+            {departments.map((department) => (
               <ListGroupItem
-              data-bs-theme="dark"
-                key={department.id} // TODO change to department id
+                data-bs-theme="dark"
+                key={department.id}
                 className="search-list-group-item"
                 onClick={() => onClickItem(department)}
               >
@@ -68,7 +78,7 @@ export const Department: FC<DepartmentModel> = ({
       </InputGroup>
       {search.length > 1 && suggestions.length > 0 && (
         <ListGroup>
-          {suggestions.map(suggestion => (
+          {suggestions.map((suggestion) => (
             <ListGroupItem
               key={suggestion.id}
               onClick={() => onClickItem(suggestion)}

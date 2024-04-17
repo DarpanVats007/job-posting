@@ -1,25 +1,24 @@
-import { Button, Card } from "react-bootstrap"
+import { Button, Card } from "react-bootstrap";
 
-import { useGetPostingsQuery } from "./postingsApiSlice"
+import { useGetPostingsQuery } from "./postingsApiSlice";
 
 export const Postings = () => {
-  const { data, isError, isLoading, isSuccess } =
-    useGetPostingsQuery(10)
+  const { data, isError, isLoading, isSuccess } = useGetPostingsQuery(10);
 
   if (isError) {
     return (
       <div>
         <h1>There was an error!!!</h1>
       </div>
-    )
+    );
   }
 
   if (isLoading) {
     return (
-      <div> 
+      <div>
         <h1>Loading...</h1>
       </div>
-    )
+    );
   }
 
   if (isSuccess) {
@@ -32,10 +31,9 @@ export const Postings = () => {
               style={{
                 textAlign: "left",
                 marginBottom: 20,
-                // TODO add margin and padding to page
               }}
               onClick={
-                () => {}
+                () => {} //TODO add jobdesc page
                 //   listingDescription(u.id, u.customField[1].valueLabel)
               }
             >
@@ -48,8 +46,8 @@ export const Postings = () => {
             </Card>
           ))}
       </div>
-    )
+    );
   }
 
-  return null
-}
+  return null;
+};

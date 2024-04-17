@@ -1,5 +1,12 @@
 import type { ChangeEvent, FC } from "react";
-import { Container, DropdownButton, Form, InputGroup, ListGroup, ListGroupItem } from "react-bootstrap";
+import {
+  Container,
+  DropdownButton,
+  Form,
+  InputGroup,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
 
 import { Tag } from "../../components/tag";
 import type { TagModel } from "../../components/tag";
@@ -20,7 +27,7 @@ export const Location: FC<LocationModel> = ({
   locations,
   placeHolderText,
   filterTags,
-  type
+  type,
 }) => {
   const [search, setSearch] = useState<string>("");
   const [suggestions, setSuggestions] = useState<location[]>([]);
@@ -35,13 +42,16 @@ export const Location: FC<LocationModel> = ({
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const regex = new RegExp(`^${value}`, "i");
-    const suggestions = value.length > 0 ? locations.filter(v => regex.test(v.city)).sort() : [];
+    const suggestions =
+      value.length > 0
+        ? locations.filter((v) => regex.test(v.city)).sort()
+        : [];
     setSuggestions(suggestions);
     setSearch(value);
   };
 
   return (
-    <Container >
+    <Container>
       <InputGroup className="w-100">
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">
@@ -55,9 +65,9 @@ export const Location: FC<LocationModel> = ({
         </Form>
         <DropdownButton id="input-group-dropdown-2" title="">
           <ListGroup className="search-list-group">
-            {locations.map(location => (
+            {locations.map((location) => (
               <ListGroupItem
-                key={location.city} // TODO change to location id
+                key={location.id}
                 className="search-list-group-item"
                 onClick={() => onClickItem(location)}
               >
@@ -69,7 +79,7 @@ export const Location: FC<LocationModel> = ({
       </InputGroup>
       {search.length > 1 && suggestions.length > 0 && (
         <ListGroup>
-          {suggestions.map(suggestion => (
+          {suggestions.map((suggestion) => (
             <ListGroupItem
               key={suggestion.city}
               onClick={() => onClickItem(suggestion)}

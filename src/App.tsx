@@ -1,14 +1,23 @@
-import "./App.css"
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import HomePage, {  } from "./pages/home"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-const App = () => {
+import type { FC } from "react";
+import HomePage from "./pages/home";
+import JobDetails from "./pages/job-detail"; // Corrected import statement
+
+const App: FC = () => {
   return (
-    <div className="App">
-   <HomePage/>
-    </div>
-  )
-}
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/:jobId" element={<JobDetails />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
-export default App
+export default App;

@@ -1,12 +1,23 @@
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import type { Posting, location } from "../features/postings/postingsApiSlice";
-import { addJob, removeAllJobs, selectJob } from "../features/job/jobSlice";
-import { removeAllDepartments, selectDepartment } from "../features/department/departmentSlice";
-import { removeAllLocations, selectLocation } from "../features/location/locationSlice";
+import {
+  addJobList,
+  removeAllJobLists,
+  removeJobList,
+  selectJobList,
+} from "../features/job/jobListSlice";
+import {
+  removeAllDepartments,
+  selectDepartment,
+} from "../features/department/departmentSlice";
+import {
+  removeAllLocations,
+  selectLocation,
+} from "../features/location/locationSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
 import { Department } from "../features/department/department";
-import { Job } from "../features/job/job";
+import { JobList } from "../features/job/jobList";
 import { Location } from "../features/location/location";
 import type { SearchCriteria } from "../utils/search";
 import { searchJobs } from "../utils/search";
@@ -15,17 +26,24 @@ import { useGetPostingsQuery } from "../features/postings/postingsApiSlice";
 export default function HomePage() {
   const locationState = useAppSelector(selectLocation);
   const departmentState = useAppSelector(selectDepartment);
-  const jobsState = useAppSelector(selectJob);
+  const jobListState = useAppSelector(selectJobList);
 
   const dispatch = useAppDispatch();
 
-  const { data: posts, isError, isLoading, isSuccess } = useGetPostingsQuery(10);
+  const {
+    data: posts,
+    isError,
+    isLoading,
+    isSuccess,
+  } = useGetPostingsQuery(10); // TODO add error and loding state
 
-  const arrDept = [...new Set(posts?.content.map((element) => element.department))];
+  const arrDept = [
+    ...new Set(posts?.content.map((element) => element.department)),
+  ];
 
   const uniqueLocations = (locations: location[]) => {
     const uniqueCities = new Set();
-    return locations.filter(location => {
+    return locations.filter((location) => {
       const city = location.city;
       if (!uniqueCities.has(city)) {
         uniqueCities.add(city);
@@ -35,15 +53,18 @@ export default function HomePage() {
     });
   };
 
-  const handleSearch = (jobs: Posting[], { location, department }: SearchCriteria) => {
+  const handleSearch = (
+    jobs: Posting[],
+    { location, department }: SearchCriteria,
+  ) => {
     const searchResult = searchJobs(jobs, { location, department });
-    dispatch(addJob(searchResult));
+    dispatch(addJobList(searchResult));
   };
 
   const clearSearch = () => {
     dispatch(removeAllLocations());
     dispatch(removeAllDepartments());
-    dispatch(removeAllJobs());
+    dispatch(removeAllJobLists());
   };
 
   if (isSuccess) {
@@ -52,7 +73,9 @@ export default function HomePage() {
         <Row style={{ margin: "10px 0px" }}>
           <Col sm={5} className="d-flex justify-content-center">
             <Location
-              locations={uniqueLocations(posts?.content.map(element => element.location))}
+              locations={uniqueLocations(
+                posts?.content.map((element) => element.location),
+              )}
               placeHolderText="Search Location"
               type="location"
               filterTags={locationState}
@@ -82,7 +105,9 @@ export default function HomePage() {
 
         <Row style={{ margin: "20px 0px" }}>
           <Col sm={12}>
-            {departmentState.length || locationState.length || jobsState.length ? (
+            {departmentState.length ||
+            locationState.length ||
+            jobListState.length ? (
               <Button onClick={() => clearSearch()}>Clear search</Button>
             ) : (
               <></>
@@ -90,7 +115,13 @@ export default function HomePage() {
           </Col>
         </Row>
 
-        <div>{jobsState.length ? <Job jobs={jobsState.flat()} /> : <Job jobs={posts.content} />}</div>
+        <div>
+          {jobListState.length ? (
+            <JobList jobLists={jobListState.flat()} />
+          ) : (
+            <JobList jobLists={posts.content} />
+          )}
+        </div>
       </Container>
     );
   }
