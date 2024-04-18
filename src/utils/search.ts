@@ -1,18 +1,18 @@
 import type {
-  Posting,
-  department,
-  location,
+  DepartmentModel,
+  LocationModel,
+  PostingModel,
 } from "../features/postings/postingsApiSlice";
 
 export type SearchCriteria = {
-  location?: location[] | null;
-  department?: department[] | null;
+  location?: LocationModel[] | null;
+  department?: DepartmentModel[] | null;
 };
 
 export const searchJobs = (
-  jobs: Posting[],
+  jobs: PostingModel[],
   { location, department }: SearchCriteria,
-): Posting[] => {
+): PostingModel[] => {
   const searchLocation = location
     ? location.map((loc) => loc.city.toLowerCase())
     : [];

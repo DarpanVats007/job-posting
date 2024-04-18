@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { DepartmentList } from "../features/department/departmentList";
 import Footer from "../components/layout/footer";
 import { JobList } from "../features/job/jobList";
-import { LocationList } from "../features/location/location";
+import { LocationList } from "../features/location/locationList";
 import { NavigationBar } from "../components/layout/navigationBar";
 import type { SearchCriteria } from "../utils/search";
 import { searchJobs } from "../utils/search";
@@ -97,6 +97,7 @@ export default function HomePage() {
             </Col>
             <Col sm={2} style={{ textAlign: "right" }}>
               <Button
+                data-testid="search-button"
                 onClick={() =>
                   handleSearch(posts.content, {
                     location: locationState,
@@ -123,9 +124,12 @@ export default function HomePage() {
 
           <div>
             {jobListState.length ? (
-              <JobList jobLists={jobListState.flat()} />
+              <JobList
+                jobLists={jobListState.flat()}
+                data-testid="job-list-1"
+              />
             ) : (
-              <JobList jobLists={posts.content} />
+              <JobList jobLists={posts.content} data-testid="job-list-2" />
             )}
           </div>
         </Container>

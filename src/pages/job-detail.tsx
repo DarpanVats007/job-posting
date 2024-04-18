@@ -47,24 +47,24 @@ export const JobDetails: FC = () => {
                   onClick={() => {
                     navigate("/");
                   }}
-                  data-test="back"
+                  data-testid="back"
                 >
                   Back
                 </Button>
               </OverlayTrigger>
             </Card.Header>
             <Card.Body>
-              <Card.Title data-test="posting-name">{post?.name}</Card.Title>
+              <Card.Title data-testid="posting-name">{post?.name}</Card.Title>
               <Card.Subtitle
                 className="mb-2 text-muted"
-                data-test="posting-location"
+                data-testid="posting-location"
               >
                 {post?.location.city}, {post?.location.country}
               </Card.Subtitle>
-              <Card.Title data-test="job-description">
+              <Card.Title data-testid="job-description">
                 {post?.jobAd.sections.jobDescription.title}
               </Card.Title>
-              <Card.Text data-test="job-qualifications">
+              <Card.Text data-testid="job-qualifications">
                 <div
                   dangerouslySetInnerHTML={{
                     __html: post?.jobAd.sections.jobDescription.text || "",

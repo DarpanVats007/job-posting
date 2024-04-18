@@ -16,5 +16,6 @@
     "jsx": "react-jsx",
     "types": ["vitest/globals"]
   },
+  "include": ["cypress","src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

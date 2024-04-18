@@ -25,17 +25,17 @@ export const JobList: FC<JobListModel> = ({ jobLists }) => {
               state: jobList.id,
             })
           }
-          data-test="posting"
+          data-testid="navigate-to-posting"
           style={{
             margin: "10px 0px",
             textAlign: "left",
           }}
         >
-          <Card.Header as="h5" data-test="posting-name">
+          <Card.Header as="h5" data-testid="job-list-posting-name">
             {jobList.name}
           </Card.Header>
           <Card.Body>
-            <Card.Title data-test="posting-location">
+            <Card.Title data-testid="job-list-posting-location">
               {jobList.location.city}, {jobList.department.label}
             </Card.Title>
           </Card.Body>

@@ -54,7 +54,7 @@ export const LocationList: FC<LocationListModel> = ({
   };
 
   return (
-    <Container>
+    <Container data-testid="job-list-location">
       <InputGroup className="w-100">
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">

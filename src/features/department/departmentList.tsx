@@ -49,7 +49,7 @@ export const DepartmentList: FC<DepartmentListModel> = ({
   };
 
   return (
-    <Container>
+    <Container data-testid="job-list-department">
       <InputGroup className="w-100">
         <Form>
           <Form.Group controlId="exampleForm.ControlInput1">

@@ -1,6 +1,6 @@
 import type {
-  department,
-  location,
+  DepartmentModel,
+  LocationModel,
 } from "../features/postings/postingsApiSlice";
 
 import { Button } from "react-bootstrap";
@@ -11,18 +11,18 @@ import { useAppDispatch } from "../app/hooks";
 
 export type TagModel = {
   type: "location" | "department";
-  badges: location[] | department[];
+  badges: LocationModel[] | DepartmentModel[];
 };
 
 export const Tag: FC<TagModel> = ({ type, badges }) => {
   const dispatch = useAppDispatch();
 
-  const clearSearch = (badge: location | department) => {
+  const clearSearch = (badge: LocationModel | DepartmentModel) => {
     if (type === "location") {
-      const locationBadge = badge as location;
+      const locationBadge = badge as LocationModel;
       dispatch(removeLocation(locationBadge));
     } else if (type === "department") {
-      const departmentBadge = badge as department;
+      const departmentBadge = badge as DepartmentModel;
       dispatch(removeDepartment(departmentBadge));
     }
   };
@@ -44,11 +44,13 @@ export const Tag: FC<TagModel> = ({ type, badges }) => {
             backdropFilter: "blur(10px)",
           }}
         >
-          {type === "location" && (badge as location).city ? (
-            <span className="badge bg-primary">{(badge as location).city}</span>
-          ) : type === "department" && (badge as department).label ? (
+          {type === "location" && (badge as LocationModel).city ? (
             <span className="badge bg-primary">
-              {(badge as department).label}
+              {(badge as LocationModel).city}
+            </span>
+          ) : type === "department" && (badge as DepartmentModel).label ? (
+            <span className="badge bg-primary">
+              {(badge as DepartmentModel).label}
             </span>
           ) : null}
           <span onClick={() => clearSearch(badge)} aria-hidden="true">
