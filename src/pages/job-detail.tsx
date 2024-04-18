@@ -7,6 +7,8 @@ import {
 } from "react-bootstrap";
 
 import type { FC } from "react";
+import Footer from "../components/layout/footer";
+import { NavigationBar } from "../components/layout/navigationBar";
 import { useGetPostQuery } from "../features/postings/postApiSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -30,7 +32,8 @@ export const JobDetails: FC = () => {
   );
 
   return (
-    <div>
+    <>
+      <NavigationBar />
       <div className="listing">
         <Container>
           <Card style={{ padding: "10px", margin: "10px" }}>
@@ -72,7 +75,8 @@ export const JobDetails: FC = () => {
           </Card>
         </Container>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

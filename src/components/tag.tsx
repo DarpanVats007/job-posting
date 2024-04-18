@@ -30,13 +30,11 @@ export const Tag: FC<TagModel> = ({ type, badges }) => {
   return (
     <div
       className="posting"
-      style={{
-        background: "rgb(235,244,243)",
-        borderRadius: 10 /* Adjust opacity as needed */,
-      }}
+      style={{ background: "rgb(235,244,243)", borderRadius: 10 }}
     >
-      {badges.map((badge) => (
+      {badges.map((badge, index) => (
         <Button
+          key={index}
           variant="outline-secondary"
           className="close"
           aria-label="Close"
@@ -53,11 +51,7 @@ export const Tag: FC<TagModel> = ({ type, badges }) => {
               {(badge as department).label}
             </span>
           ) : null}
-          <span
-            key={badge.id}
-            onClick={() => clearSearch(badge)}
-            aria-hidden="true"
-          >
+          <span onClick={() => clearSearch(badge)} aria-hidden="true">
             &times;
           </span>
         </Button>

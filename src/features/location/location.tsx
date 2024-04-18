@@ -8,33 +8,36 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 
+import type { LocationModel } from "../postings/postingsApiSlice";
 import { Tag } from "../../components/tag";
 import type { TagModel } from "../../components/tag";
 import { addLocation } from "./locationSlice";
-import type { location } from "../postings/postingsApiSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export interface LocationModel {
-  locations: location[]; //TODO change to locationtype
-  filterTags: location[];
+export type LocationListModel = {
+  locations: LocationModel[]; //TODO change to locationtype
+  filterTags: LocationModel[];
   placeHolderText: string;
   type: TagModel["type"];
-}
+};
 
-export const Location: FC<LocationModel> = ({
+export const LocationList: FC<LocationListModel> = ({
   locations,
   placeHolderText,
   filterTags,
   type,
 }) => {
   const [search, setSearch] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<location[]>([]);
+  const [suggestions, setSuggestions] = useState<LocationModel[]>([]);
   const dispatch = useAppDispatch();
 
-  const onClickItem = (selectedLocation: location) => {
-    const locationWithUUID: location = { ...selectedLocation, id: uuidv4() };
+  const onClickItem = (selectedLocation: LocationModel) => {
+    const locationWithUUID: LocationModel = {
+      ...selectedLocation,
+      id: uuidv4(),
+    };
     setSearch("");
     dispatch(addLocation(locationWithUUID));
   };

@@ -1,9 +1,11 @@
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
-import type { Posting, location } from "../features/postings/postingsApiSlice";
+import type {
+  LocationModel,
+  PostingModel,
+} from "../features/postings/postingsApiSlice";
 import {
   addJobList,
   removeAllJobLists,
-  removeJobList,
   selectJobList,
 } from "../features/job/jobListSlice";
 import {
@@ -16,9 +18,11 @@ import {
 } from "../features/location/locationSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
-import { Department } from "../features/department/department";
+import { DepartmentList } from "../features/department/departmentList";
+import Footer from "../components/layout/footer";
 import { JobList } from "../features/job/jobList";
-import { Location } from "../features/location/location";
+import { LocationList } from "../features/location/location";
+import { NavigationBar } from "../components/layout/navigationBar";
 import type { SearchCriteria } from "../utils/search";
 import { searchJobs } from "../utils/search";
 import { useGetPostingsQuery } from "../features/postings/postingsApiSlice";
@@ -41,7 +45,7 @@ export default function HomePage() {
     ...new Set(posts?.content.map((element) => element.department)),
   ];
 
-  const uniqueLocations = (locations: location[]) => {
+  const uniqueLocations = (locations: LocationModel[]) => {
     const uniqueCities = new Set();
     return locations.filter((location) => {
       const city = location.city;
@@ -54,7 +58,7 @@ export default function HomePage() {
   };
 
   const handleSearch = (
-    jobs: Posting[],
+    jobs: PostingModel[],
     { location, department }: SearchCriteria,
   ) => {
     const searchResult = searchJobs(jobs, { location, department });
@@ -69,60 +73,64 @@ export default function HomePage() {
 
   if (isSuccess) {
     return (
-      <Container className="p-3">
-        <Row style={{ margin: "10px 0px" }}>
-          <Col sm={5} className="d-flex justify-content-center">
-            <Location
-              locations={uniqueLocations(
-                posts?.content.map((element) => element.location),
+      <>
+        <NavigationBar />
+        <Container className="p-3">
+          <Row style={{ margin: "10px 0px" }}>
+            <Col sm={5} className="d-flex justify-content-center">
+              <LocationList
+                locations={uniqueLocations(
+                  posts?.content.map((element) => element.location),
+                )}
+                placeHolderText="Search Location"
+                type="location"
+                filterTags={locationState}
+              />
+            </Col>
+            <Col sm={5} className="d-flex justify-content-center">
+              <DepartmentList
+                departments={arrDept}
+                placeHolderText={"Search Department"}
+                type="department"
+                filterTags={departmentState}
+              />
+            </Col>
+            <Col sm={2} style={{ textAlign: "right" }}>
+              <Button
+                onClick={() =>
+                  handleSearch(posts.content, {
+                    location: locationState,
+                    department: departmentState,
+                  })
+                }
+              >
+                Search
+              </Button>
+            </Col>
+          </Row>
+
+          <Row style={{ margin: "20px 0px" }}>
+            <Col sm={12}>
+              {departmentState.length ||
+              locationState.length ||
+              jobListState.length ? (
+                <Button onClick={() => clearSearch()}>Clear search</Button>
+              ) : (
+                <></>
               )}
-              placeHolderText="Search Location"
-              type="location"
-              filterTags={locationState}
-            />
-          </Col>
-          <Col sm={5} className="d-flex justify-content-center">
-            <Department
-              departments={arrDept}
-              placeHolderText={"Search Department"}
-              type="department"
-              filterTags={departmentState}
-            />
-          </Col>
-          <Col sm={2} style={{ textAlign: "right" }}>
-            <Button
-              onClick={() =>
-                handleSearch(posts.content, {
-                  location: locationState,
-                  department: departmentState,
-                })
-              }
-            >
-              Search
-            </Button>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
 
-        <Row style={{ margin: "20px 0px" }}>
-          <Col sm={12}>
-            {departmentState.length ||
-            locationState.length ||
-            jobListState.length ? (
-              <Button onClick={() => clearSearch()}>Clear search</Button>
+          <div>
+            {jobListState.length ? (
+              <JobList jobLists={jobListState.flat()} />
             ) : (
-              <></>
+              <JobList jobLists={posts.content} />
             )}
-          </Col>
-        </Row>
-
-        <div>
-          {jobListState.length ? (
-            <JobList jobLists={jobListState.flat()} />
-          ) : (
-            <JobList jobLists={posts.content} />
-          )}
-        </div>
-      </Container>
+          </div>
+        </Container>
+        <Footer />
+      </>
     );
   }
 

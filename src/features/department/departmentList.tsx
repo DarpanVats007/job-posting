@@ -8,31 +8,31 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 
+import type { DepartmentModel } from "../postings/postingsApiSlice";
 import { Tag } from "../../components/tag";
 import type { TagModel } from "../../components/tag";
 import { addDepartment } from "./departmentSlice";
-import type { department } from "../postings/postingsApiSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { useState } from "react";
 
-export interface DepartmentModel {
-  departments: department[];
-  filterTags: department[];
+export type DepartmentListModel = {
+  departments: DepartmentModel[];
+  filterTags: DepartmentModel[];
   placeHolderText: string;
   type: TagModel["type"];
-}
+};
 
-export const Department: FC<DepartmentModel> = ({
+export const DepartmentList: FC<DepartmentListModel> = ({
   departments,
   placeHolderText,
   filterTags,
   type,
 }) => {
   const [search, setSearch] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<department[]>([]);
+  const [suggestions, setSuggestions] = useState<DepartmentModel[]>([]);
   const dispatch = useAppDispatch();
 
-  const onClickItem = (selectedDepartment: department) => {
+  const onClickItem = (selectedDepartment: DepartmentModel) => {
     setSearch("");
     dispatch(addDepartment(selectedDepartment));
   };

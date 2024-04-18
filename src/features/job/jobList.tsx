@@ -1,11 +1,11 @@
 import { Card } from "react-bootstrap";
 import type { FC } from "react";
-import type { Posting } from "../postings/postingsApiSlice";
+import type { PostingModel } from "../postings/postingsApiSlice";
 import { useNavigate } from "react-router-dom";
 
-export interface JobListModel {
-  jobLists: Posting[];
-}
+export type JobListModel = {
+  jobLists: PostingModel[];
+};
 
 export const JobList: FC<JobListModel> = ({ jobLists }) => {
   const navigate = useNavigate();

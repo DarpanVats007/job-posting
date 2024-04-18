@@ -1,17 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export type location = {
+export type LocationModel = {
   id?: string;
   city: string;
   region: string;
   country: string;
   remote: boolean;
 };
-export type department = {
+export type DepartmentModel = {
   id: string;
   label: string;
 };
-export type Posting = {
+export type PostingModel = {
   id: string;
   name: string;
   uuid: string;
@@ -24,12 +24,12 @@ export type Posting = {
     name: string;
   };
   releasedDate: string;
-  location: location;
+  location: LocationModel;
   industry: {
     id: string;
     label: string;
   };
-  department: department;
+  department: DepartmentModel;
   function: {
     id: string;
     label: string;
@@ -50,12 +50,12 @@ export type Posting = {
   };
 };
 
-interface PostingsApiResponse {
-  content: Posting[];
+export type PostingsApiResponse = {
+  content: PostingModel[];
   total: number;
   skip: number;
   limit: number;
-}
+};
 
 export const postingsApiSlice = createApi({
   baseQuery: fetchBaseQuery({

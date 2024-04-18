@@ -1,9 +1,9 @@
+import type { DepartmentModel } from "../postings/postingsApiSlice";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
-import type { department } from "../postings/postingsApiSlice";
 
 export type DepartmentSliceState = {
-  value: department[];
+  value: DepartmentModel[];
   status: "idle" | "loading" | "failed";
 };
 
@@ -17,12 +17,12 @@ export const departmentSlice = createAppSlice({
   initialState,
   reducers: (create) => ({
     addDepartment: create.reducer(
-      (state, action: PayloadAction<department>) => {
+      (state, action: PayloadAction<DepartmentModel>) => {
         state.value.push(action.payload);
       },
     ),
     removeDepartment: create.reducer(
-      (state, action: PayloadAction<department>) => {
+      (state, action: PayloadAction<DepartmentModel>) => {
         state.value = state.value.filter(
           (department) => department.id !== action.payload.id,
         );

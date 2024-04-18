@@ -1,39 +1,39 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface Location {
+type Location = {
   city: string;
   region: string;
   country: string;
   remote: boolean;
-}
+};
 
-interface Company {
+type Company = {
   name: string;
   identifier: string;
-}
+};
 
-interface CustomField {
+type CustomField = {
   fieldId: string;
   fieldLabel: string;
   valueId: string;
   valueLabel: string;
-}
+};
 
-interface JobAdSection {
+type JobAdSection = {
   title: string;
   text: string;
-}
+};
 
-interface JobAd {
+type JobAd = {
   sections: {
     companyDescription: JobAdSection;
     jobDescription: JobAdSection;
     qualifications: JobAdSection;
     additionalInformation: JobAdSection;
   };
-}
+};
 
-export interface PostApiResponse {
+export type PostApiResponse = {
   id: string;
   name: string;
   uuid: string;
@@ -80,7 +80,7 @@ export interface PostApiResponse {
     label: string;
     labelNative: string;
   };
-}
+};
 
 export const postApiSlice = createApi({
   baseQuery: fetchBaseQuery({

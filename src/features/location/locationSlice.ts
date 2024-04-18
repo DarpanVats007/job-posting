@@ -1,11 +1,11 @@
+import type { LocationModel } from "../postings/postingsApiSlice";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
-import type { location } from "../postings/postingsApiSlice";
 
-export interface LocationSliceState {
-  value: location[];
+export type LocationSliceState = {
+  value: LocationModel[];
   status: "idle" | "loading" | "failed";
-}
+};
 
 const initialState: LocationSliceState = {
   value: [],
@@ -16,19 +16,23 @@ export const locationSlice = createAppSlice({
   name: "location",
   initialState,
   reducers: (create) => ({
-    addLocation: create.reducer((state, action: PayloadAction<location>) => {
-      const existingLocation = state.value.find(
-        (loc) => loc.city === action.payload.city,
-      );
-      if (!existingLocation) {
-        state.value.push(action.payload);
-      }
-    }),
-    removeLocation: create.reducer((state, action: PayloadAction<location>) => {
-      state.value = state.value.filter(
-        (location) => location.id !== action.payload.id,
-      );
-    }),
+    addLocation: create.reducer(
+      (state, action: PayloadAction<LocationModel>) => {
+        const existingLocation = state.value.find(
+          (loc) => loc.city === action.payload.city,
+        );
+        if (!existingLocation) {
+          state.value.push(action.payload);
+        }
+      },
+    ),
+    removeLocation: create.reducer(
+      (state, action: PayloadAction<LocationModel>) => {
+        state.value = state.value.filter(
+          (location) => location.id !== action.payload.id,
+        );
+      },
+    ),
     removeAllLocations: create.reducer((state) => {
       state.value = [];
     }),
