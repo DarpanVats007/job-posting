@@ -37,7 +37,6 @@ export const Tag: FC<TagModel> = ({ type, badges }) => {
     >
       {badges.map((badge) => (
         <Button
-          key={badge.id}
           variant="outline-secondary"
           className="close"
           aria-label="Close"

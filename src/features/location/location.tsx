@@ -81,7 +81,7 @@ export const Location: FC<LocationModel> = ({
         <ListGroup>
           {suggestions.map((suggestion) => (
             <ListGroupItem
-              key={suggestion.city}
+              key={suggestion.id}
               onClick={() => onClickItem(suggestion)}
             >
               {suggestion.city}

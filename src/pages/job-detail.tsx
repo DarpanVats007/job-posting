@@ -8,12 +8,11 @@ import {
 
 import type { FC } from "react";
 import { useGetPostQuery } from "../features/postings/postApiSlice";
+import { useNavigate } from "react-router-dom";
 
 export const JobDetails: FC = () => {
   const currentURL = window.location.href;
   const jobId = currentURL.match(/\/(\d+)$/);
-
-  console.log(+jobId![1]);
 
   const {
     data: post,
@@ -22,7 +21,7 @@ export const JobDetails: FC = () => {
     isSuccess,
   } = useGetPostQuery(+jobId![1]);
 
-  console.log(post);
+  const navigate = useNavigate();
 
   const renderTooltip = (props: any) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -41,7 +40,12 @@ export const JobDetails: FC = () => {
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip}
               >
-                <Button onClick={() => {}} data-test="back">
+                <Button
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                  data-test="back"
+                >
                   Back
                 </Button>
               </OverlayTrigger>
