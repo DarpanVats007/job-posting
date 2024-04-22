@@ -6,6 +6,11 @@ import {
   removeAllDepartments,
   selectDepartment,
 } from "../features/department";
+import type {
+  DepartmentModel,
+  LocationModel,
+  PostingModel,
+} from "../features/postings";
 import { Footer, NavigationBar } from "../components/layout";
 import {
   JobList,
@@ -18,14 +23,18 @@ import {
   removeAllLocations,
   selectLocation,
 } from "../features/location";
-import type { LocationModel, PostingModel } from "../features/postings";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useEffect, useState } from "react";
 
+import type { FC } from "react";
 import type { SearchCriteria } from "../utils/search";
 import { searchJobs } from "../utils/search";
+import { uniqueFilter } from "../utils/unique-array";
 import { useGetPostingsQuery } from "../features/postings";
 
-export default function HomePage() {
+export const HomePage: FC = () => {
+  const [locations, setLocations] = useState<LocationModel[]>([]);
+  const [departments, setDepartments] = useState<DepartmentModel[]>([]);
   const locationState = useAppSelector(selectLocation);
   const departmentState = useAppSelector(selectDepartment);
   const jobListState = useAppSelector(selectJobList);
@@ -37,23 +46,24 @@ export default function HomePage() {
     isError,
     isLoading,
     isSuccess,
-  } = useGetPostingsQuery(10); // TODO add error and loding state
+  } = useGetPostingsQuery(10); // TODO add error and loading state
 
-  const arrDept = [
-    ...new Set(posts?.content.map((element) => element.department)),
-  ];
-
-  const uniqueLocations = (locations: LocationModel[]) => {
-    const uniqueCities = new Set();
-    return locations.filter((location) => {
-      const city = location.city;
-      if (!uniqueCities.has(city)) {
-        uniqueCities.add(city);
-        return true;
-      }
-      return false;
-    });
-  };
+  useEffect(() => {
+    if (isSuccess && posts) {
+      setLocations(
+        uniqueFilter(
+          posts.content.map((element) => element.location),
+          "city",
+        ),
+      );
+      setDepartments(
+        uniqueFilter(
+          posts.content.map((element) => element.department),
+          "label",
+        ),
+      );
+    }
+  }, [isSuccess, posts]);
 
   const handleSearch = (
     jobs: PostingModel[],
@@ -69,6 +79,16 @@ export default function HomePage() {
     dispatch(removeAllJobLists());
   };
 
+  if (isLoading) {
+    // Loading state
+    return (
+      <div className="loading">
+        <Spinner animation="border" variant="primary" />
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
+
   if (isSuccess) {
     return (
       <>
@@ -76,15 +96,13 @@ export default function HomePage() {
         <Container className="p-3">
           <div className="search-container">
             <LocationList
-              locations={uniqueLocations(
-                posts?.content.map((element) => element.location),
-              )}
+              locations={locations}
               placeHolderText="Search Location"
               type="location"
               filterTags={locationState}
             />
             <DepartmentList
-              departments={arrDept}
+              departments={departments}
               placeHolderText={"Search Department"}
               type="department"
               filterTags={departmentState}
@@ -133,11 +151,6 @@ export default function HomePage() {
     );
   }
 
-  // Loading state
-  return (
-    <div className="loading">
-      <Spinner animation="border" variant="primary" />
-      <h1>Loading...</h1>
-    </div>
-  );
-}
+  // Handle error state
+  return <div>Error occurred...</div>;
+};

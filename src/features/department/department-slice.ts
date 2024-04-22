@@ -1,4 +1,4 @@
-import type { DepartmentModel } from "../postings/postings-api-slice";
+import type { DepartmentModel } from "../postings";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
 
@@ -18,7 +18,12 @@ export const departmentSlice = createAppSlice({
   reducers: (create) => ({
     addDepartment: create.reducer(
       (state, action: PayloadAction<DepartmentModel>) => {
-        state.value.push(action.payload);
+        const existingDept = state.value.find(
+          (dept) => dept.label === action.payload.label,
+        );
+        if (!existingDept) {
+          state.value.push(action.payload);
+        }
       },
     ),
     removeDepartment: create.reducer(

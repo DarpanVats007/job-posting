@@ -76,9 +76,9 @@ export const Search: FC<SearchModel<any>> = ({
         <InputGroup>
           <DropdownButton id="input-group-dropdown-2" title="">
             <ListGroup className="search-list-group">
-              {items.map((item) => (
+              {items.map((item, index) => (
                 <ListGroupItem
-                  key={item.id}
+                  key={index}
                   className="search-list-group-item"
                   onClick={() => onClickItem(item)}
                 >
