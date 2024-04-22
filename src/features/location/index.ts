@@ -1,2 +1,2 @@
-export { LocationList } from "./locationList";
-export * from "./locationSlice";
+export { LocationList } from "./location-list";
+export * from "./location-slice";

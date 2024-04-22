@@ -1,36 +1,36 @@
+import type { DepartmentModel } from "../postings/postingsApiSlice";
 import type { FC } from "react";
-import type { LocationModel } from "../postings/postingsApiSlice";
 import { Search } from "../../components/search/search-with-dropdown";
 import type { TagModel } from "../../components/tag";
-import { addLocation } from "./locationSlice";
+import { addDepartment } from "./department-slice";
 import { useAppDispatch } from "../../app/hooks";
 
-interface LocationListModel {
-  locations: LocationModel[];
-  filterTags: LocationModel[];
+export type DepartmentListModel = {
+  departments: DepartmentModel[];
+  filterTags: DepartmentModel[];
   placeHolderText: string;
   type: TagModel["type"];
-}
+};
 
-export const LocationList: FC<LocationListModel> = ({
-  locations,
+export const DepartmentList: FC<DepartmentListModel> = ({
+  departments,
   placeHolderText,
   filterTags,
   type,
 }) => {
   const dispatch = useAppDispatch();
 
-  const onClickItem = (selectedLocation: LocationModel) => {
-    dispatch(addLocation(selectedLocation));
+  const onClickItem = (selectedDepartment: DepartmentModel) => {
+    dispatch(addDepartment(selectedDepartment));
   };
 
   return (
     <Search
-      items={locations}
+      items={departments}
       placeHolderText={placeHolderText}
       onSearchChange={() => {}}
       onClickItem={onClickItem}
-      renderItem={(location) => location.city}
+      renderItem={(department) => department.label}
       filterTags={filterTags}
       type={type}
     />

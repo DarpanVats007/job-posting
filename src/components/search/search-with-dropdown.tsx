@@ -59,7 +59,11 @@ export const Search: FC<SearchModel<any>> = ({
           flexDirection: "row",
         }}
       >
-        <Form>
+        <Form
+          style={{
+            minWidth: 300,
+          }}
+        >
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Control
               type="search"

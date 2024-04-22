@@ -1,2 +1,2 @@
-export { JobList } from "./jobList";
-export * from "./jobListSlice";
+export { JobList } from "./job-list";
+export * from "./job-list-slice";

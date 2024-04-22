@@ -90,6 +90,9 @@ export default function HomePage() {
               filterTags={departmentState}
             />
             <Button
+              style={{
+                maxHeight: 40,
+              }}
               data-testid="search-button"
               onClick={() =>
                 handleSearch(posts.content, {

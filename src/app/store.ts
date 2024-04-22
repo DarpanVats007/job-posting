@@ -1,9 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
-import { JobListSlice } from "../features/job/jobListSlice";
-import { departmentSlice } from "../features/department/departmentSlice";
-import { locationSlice } from "../features/location/locationSlice";
+import { JobListSlice } from "../features/job/job-list-slice";
+import { departmentSlice } from "../features/department/department-slice";
+import { locationSlice } from "../features/location/location-slice";
 import { postApiSlice } from "../features/postings/postApiSlice";
 import { postingsApiSlice } from "../features/postings/postingsApiSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";

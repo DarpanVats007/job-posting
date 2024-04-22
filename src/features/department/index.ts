@@ -1,2 +1,2 @@
-export { DepartmentList } from "./departmentList";
-export * from "./departmentSlice";
+export { DepartmentList } from "./department-list";
+export * from "./department-slice";
