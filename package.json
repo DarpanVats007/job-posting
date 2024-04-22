@@ -1,5 +1,6 @@
 {
-  "name": "Job List App",
+  "homepage": "http://DarpanVats007.github.io/JobPosting",
+  "name": "job-list-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
