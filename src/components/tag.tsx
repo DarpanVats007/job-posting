@@ -1,12 +1,9 @@
-import type {
-  DepartmentModel,
-  LocationModel,
-} from "../features/postings/postingsApiSlice";
+import type { DepartmentModel, LocationModel } from "../features/postings";
 
 import { Button } from "react-bootstrap";
 import type { FC } from "react";
-import { removeDepartment } from "../features/department/departmentSlice";
-import { removeLocation } from "../features/location/locationSlice";
+import { removeDepartment } from "../features/department";
+import { removeLocation } from "../features/location";
 import { useAppDispatch } from "../app/hooks";
 
 export type TagModel = {

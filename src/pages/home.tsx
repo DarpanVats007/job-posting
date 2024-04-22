@@ -1,31 +1,29 @@
+import "./home.css";
+
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
-import type {
-  LocationModel,
-  PostingModel,
-} from "../features/postings/postingsApiSlice";
 import {
+  DepartmentList,
+  removeAllDepartments,
+  selectDepartment,
+} from "../features/department";
+import { Footer, NavigationBar } from "../components/layout";
+import {
+  JobList,
   addJobList,
   removeAllJobLists,
   selectJobList,
-} from "../features/job/jobListSlice";
+} from "../features/job";
 import {
-  removeAllDepartments,
-  selectDepartment,
-} from "../features/department/departmentSlice";
-import {
+  LocationList,
   removeAllLocations,
   selectLocation,
-} from "../features/location/locationSlice";
+} from "../features/location";
+import type { LocationModel, PostingModel } from "../features/postings";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 
-import { DepartmentList } from "../features/department/departmentList";
-import Footer from "../components/layout/footer";
-import { JobList } from "../features/job/jobList";
-import { LocationList } from "../features/location/locationList";
-import { NavigationBar } from "../components/layout/navigationBar";
 import type { SearchCriteria } from "../utils/search";
 import { searchJobs } from "../utils/search";
-import { useGetPostingsQuery } from "../features/postings/postingsApiSlice";
+import { useGetPostingsQuery } from "../features/postings";
 
 export default function HomePage() {
   const locationState = useAppSelector(selectLocation);
@@ -76,39 +74,33 @@ export default function HomePage() {
       <>
         <NavigationBar />
         <Container className="p-3">
-          <Row style={{ margin: "10px 0px" }}>
-            <Col sm={5} className="d-flex justify-content-center">
-              <LocationList
-                locations={uniqueLocations(
-                  posts?.content.map((element) => element.location),
-                )}
-                placeHolderText="Search Location"
-                type="location"
-                filterTags={locationState}
-              />
-            </Col>
-            <Col sm={5} className="d-flex justify-content-center">
-              <DepartmentList
-                departments={arrDept}
-                placeHolderText={"Search Department"}
-                type="department"
-                filterTags={departmentState}
-              />
-            </Col>
-            <Col sm={2} style={{ textAlign: "right" }}>
-              <Button
-                data-testid="search-button"
-                onClick={() =>
-                  handleSearch(posts.content, {
-                    location: locationState,
-                    department: departmentState,
-                  })
-                }
-              >
-                Search
-              </Button>
-            </Col>
-          </Row>
+          <div className="search-container">
+            <LocationList
+              locations={uniqueLocations(
+                posts?.content.map((element) => element.location),
+              )}
+              placeHolderText="Search Location"
+              type="location"
+              filterTags={locationState}
+            />
+            <DepartmentList
+              departments={arrDept}
+              placeHolderText={"Search Department"}
+              type="department"
+              filterTags={departmentState}
+            />
+            <Button
+              data-testid="search-button"
+              onClick={() =>
+                handleSearch(posts.content, {
+                  location: locationState,
+                  department: departmentState,
+                })
+              }
+            >
+              Search
+            </Button>
+          </div>
 
           <Row style={{ margin: "20px 0px" }}>
             <Col sm={12}>

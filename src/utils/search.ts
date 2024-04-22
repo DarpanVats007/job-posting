@@ -2,7 +2,7 @@ import type {
   DepartmentModel,
   LocationModel,
   PostingModel,
-} from "../features/postings/postingsApiSlice";
+} from "../features/postings";
 
 export type SearchCriteria = {
   location?: LocationModel[] | null;

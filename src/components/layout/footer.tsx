@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import type { FC } from "react";
 
-const Footer: FC = () => {
+export const Footer: FC = () => {
   return (
     <footer className="footer mt-auto">
       <Container className="d-flex justify-content-center">
@@ -15,5 +15,3 @@ const Footer: FC = () => {
     </footer>
   );
 };
-
-export default Footer;

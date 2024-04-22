@@ -5,11 +5,10 @@ import {
   OverlayTrigger,
   Tooltip,
 } from "react-bootstrap";
+import { Footer, NavigationBar } from "../components/layout";
 
 import type { FC } from "react";
-import Footer from "../components/layout/footer";
-import { NavigationBar } from "../components/layout/navigationBar";
-import { useGetPostQuery } from "../features/postings/postApiSlice";
+import { useGetPostQuery } from "../features/postings";
 import { useNavigate } from "react-router-dom";
 
 export const JobDetails: FC = () => {
