@@ -21,7 +21,7 @@ export default defineConfig({
   },
   root: "./",
   build: {
-    outDir: "./dist",
+    outDir: "build",
     rollupOptions: {
       input: {
         index: resolve(__dirname, "index.html"),
@@ -38,5 +38,5 @@ export default defineConfig({
       ext: ".gz",
     }),
   ],
-  base: "/job-posting",
+  base: "/job-posting/",
 });
