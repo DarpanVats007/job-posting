@@ -1,4 +1,4 @@
-import type { DepartmentModel } from "../postings/postingsApiSlice";
+import type { DepartmentModel } from "../postings/postings-api-slice";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
 

@@ -1,4 +1,4 @@
-import type { DepartmentModel } from "../postings/postingsApiSlice";
+import type { DepartmentModel } from "../postings/postings-api-slice";
 import type { FC } from "react";
 import { Search } from "../../components/search/search-with-dropdown";
 import type { TagModel } from "../../components/tag";

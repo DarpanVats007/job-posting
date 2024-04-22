@@ -1,4 +1,4 @@
-import type { LocationModel } from "../postings/postingsApiSlice";
+import type { LocationModel } from "../postings/postings-api-slice";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createAppSlice } from "../../app/createAppSlice";
 

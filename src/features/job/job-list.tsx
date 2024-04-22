@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 import type { FC } from "react";
-import type { PostingModel } from "../postings/postingsApiSlice";
+import type { PostingModel } from "../postings/postings-api-slice";
 import { useNavigate } from "react-router-dom";
 
 export type JobListModel = {

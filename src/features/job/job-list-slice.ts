@@ -1,5 +1,5 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { PostingModel } from "../postings/postingsApiSlice";
+import type { PostingModel } from "../postings/postings-api-slice";
 import { createAppSlice } from "../../app/createAppSlice";
 
 export type JobListSliceState = {

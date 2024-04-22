@@ -4,8 +4,8 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { JobListSlice } from "../features/job/job-list-slice";
 import { departmentSlice } from "../features/department/department-slice";
 import { locationSlice } from "../features/location/location-slice";
-import { postApiSlice } from "../features/postings/postApiSlice";
-import { postingsApiSlice } from "../features/postings/postingsApiSlice";
+import { postApiSlice } from "../features/postings/post-api-slice";
+import { postingsApiSlice } from "../features/postings/postings-api-slice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 // `combineSlices` automatically combines the reducers using

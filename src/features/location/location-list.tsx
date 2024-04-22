@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { LocationModel } from "../postings/postingsApiSlice";
+import type { LocationModel } from "../postings/postings-api-slice";
 import { Search } from "../../components/search/search-with-dropdown";
 import type { TagModel } from "../../components/tag";
 import { addLocation } from "./location-slice";
