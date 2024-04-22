@@ -6,8 +6,14 @@
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": { "project": true, "tsconfigRootDir": "./" },
-  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+},
+  "plugins": [ "react","@typescript-eslint"],
   "root": true,
   "ignorePatterns": ["dist"],
   "rules": {
