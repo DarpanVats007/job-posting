@@ -44,7 +44,7 @@ export const JobDetails: FC = () => {
               >
                 <Button
                   onClick={() => {
-                    navigate("/");
+                    navigate("/job-posting/");
                   }}
                   data-testid="back"
                 >

@@ -11,8 +11,8 @@ const App: FC = () => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/:jobId" element={<JobDetails />} />
+        <Route path="/job-posting/" element={<HomePage />} />
+        <Route path="/job-posting/:jobId" element={<JobDetails />} />
       </Routes>
     </div>
   );

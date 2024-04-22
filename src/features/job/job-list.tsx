@@ -20,7 +20,7 @@ export const JobList: FC<JobListModel> = ({ jobLists }) => {
         <Card
           key={jobList.id}
           onClick={() =>
-            navigate(`/${jobList.id}`, {
+            navigate(`/job-posting/${jobList.id}`, {
               replace: true,
               state: jobList.id,
             })
