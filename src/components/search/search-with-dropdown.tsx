@@ -7,6 +7,7 @@ import {
   ListGroup,
   ListGroupItem,
 } from "react-bootstrap";
+import type { DepartmentModel, LocationModel } from "../../features/postings";
 
 import { Tag } from "../tag";
 import type { TagModel } from "../tag";
@@ -22,7 +23,7 @@ export type SearchModel<T> = {
   type: TagModel["type"];
 };
 
-export const Search: FC<SearchModel<any>> = ({
+export const Search = <T extends LocationModel | DepartmentModel>({
   items,
   placeHolderText,
   onSearchChange,
@@ -30,9 +31,9 @@ export const Search: FC<SearchModel<any>> = ({
   renderItem,
   filterTags,
   type,
-}) => {
+}: SearchModel<T>) => {
   const [search, setSearch] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<T[]>([]);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -57,6 +58,8 @@ export const Search: FC<SearchModel<any>> = ({
         style={{
           display: "flex",
           flexDirection: "row",
+          margin: 0,
+          padding: 0,
         }}
       >
         <Form
@@ -87,15 +90,19 @@ export const Search: FC<SearchModel<any>> = ({
               ))}
             </ListGroup>
           </DropdownButton>
-          <ListGroup>
-            {suggestions.map((item, index) => (
-              <ListGroupItem key={index} onClick={() => onClickItem(item)}>
-                {renderItem(item)}
-              </ListGroupItem>
-            ))}
-          </ListGroup>
         </InputGroup>
       </Container>
+      <ListGroup
+        style={{
+          maxWidth: 300,
+        }}
+      >
+        {suggestions.map((item, index) => (
+          <ListGroupItem key={index} onClick={() => onClickItem(item)}>
+            {renderItem(item)}
+          </ListGroupItem>
+        ))}
+      </ListGroup>
       <Tag badges={filterTags} type={type} />
     </div>
   );
