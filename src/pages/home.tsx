@@ -1,6 +1,6 @@
 import "./home.css";
 
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import {
   DepartmentList,
   removeAllDepartments,
@@ -26,7 +26,9 @@ import {
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { useEffect, useState } from "react";
 
+import { ErrorLoading } from "../components/error/error-loading";
 import type { FC } from "react";
+import { JobListCardSkeleton } from "../components/skeleton/job-card-skeleton";
 import type { SearchCriteria } from "../utils/search";
 import { searchJobs } from "../utils/search";
 import { uniqueFilter } from "../utils/unique-array";
@@ -46,7 +48,7 @@ export const HomePage: FC = () => {
     isError,
     isLoading,
     isSuccess,
-  } = useGetPostingsQuery(10); // TODO add error and loading state
+  } = useGetPostingsQuery(10);
 
   useEffect(() => {
     if (isSuccess && posts) {
@@ -80,12 +82,28 @@ export const HomePage: FC = () => {
   };
 
   if (isLoading) {
-    // Loading state
     return (
-      <div className="loading">
-        <Spinner animation="border" variant="primary" />
-        <h1>Loading...</h1>
-      </div>
+      <>
+        <NavigationBar />
+        <Container className="p-3">
+          {Array.from({ length: 15 }).map((_, index) => (
+            <JobListCardSkeleton key={index} />
+          ))}
+        </Container>
+        <Footer />
+      </>
+    );
+  }
+
+  if (isError) {
+    return (
+      <>
+        <NavigationBar />
+        <Container className="p-3">
+          <ErrorLoading />
+        </Container>
+        <Footer />
+      </>
     );
   }
 
